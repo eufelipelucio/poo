@@ -6,25 +6,16 @@ import service.ServiceProduto;
 
 public class Main {
 	static ServiceProduto produtos = new ServiceProduto();
-
+    static Print print = new Print();
 	public static void main(String[] args) {
-			
-		System.out.println("--------------");
-		System.out.println("-- Bem Vindo--");
-		System.out.println("--------------");
+		print.bemVindo();	
 		Scanner scan = new Scanner(System.in);
 		int opcao = 0;
 		int posicao ;
 		String retorno = "";
 		
 		while(opcao != -1) {
-			System.out.println("Inserir Produto Digite - 1");
-			System.out.println("Remover Produto Digite - 2");
-			System.out.println("Alterar Produto Digite - 3");
-			System.out.println("Listar Produtos Digite - 4");
-			System.out.println("Selecionar um produto Digite - 5");
-			System.out.println("Digite qualquer outro número para sair");
-			System.out.println();
+			print.menu();
 			opcao = scan.nextInt();
 			switch(opcao) {
 			case 1:
@@ -37,17 +28,13 @@ public class Main {
 				Produto produto = new Produto(descricao,valor);
 				
 				retorno =  produtos.inserirProduto(produto);
-				System.out.println(retorno);
-				System.out.println("-------------------------");
-				System.out.println();
+				print.retorno(retorno);
 				break;
 			case 2:
 				System.out.println("Digite a posição do que produto deseja remover: ");
 				posicao = scan.nextInt();
 				retorno = produtos.removerProduto(posicao);
-				System.out.println(retorno);
-				System.out.println("-------------------------");
-				System.out.println();
+				print.retorno(retorno);
 				break;
 			case 3:
 				System.out.println("Digite a posição do que produto deseja alterar: ");
@@ -59,36 +46,22 @@ public class Main {
 				System.out.println("Digite o novo valor do produto : ");
 				double novoValor = scan.nextDouble();
 				
-				String nome = new String("felipe");
-				
 				Produto novoProduto = new Produto(novaDescricao, novoValor);
 				
 				retorno = produtos.alterarProduto(posicao,novoProduto);
-				System.out.println(retorno);
-				System.out.println("-------------------------");
-				System.out.println();
+				print.retorno(retorno);
 				break;
 			case 4:
-				System.out.println("----Lista De Produtos----");
-				for(int i = 0; i < produtos.pegarProdutos().size();i++) {
-					System.out.println("Nome: " + produtos.pegarProdutos().get(i).getDescricao());
-					System.out.println("Valor: " + produtos.pegarProdutos().get(i).getValorUnitario());
-					System.out.println("-------------------------");
-				}
-				System.out.println();
-				
+				print.imprimeProdutos(produtos);
 				break;
 			case 5:
 				System.out.println("Digite a posição do que produto deseja selecionar: ");
 				posicao = scan.nextInt();
-				Produto produtoSelecionado = produtos.pegarProduto(posicao);
-				System.out.println("Nome do produto selecionado : " +  produtoSelecionado.getDescricao() );
-				System.out.println("Valor do produto selecionado : " + produtoSelecionado.getValorUnitario());
-				System.out.println("-------------------------");
-				System.out.println();
+				print.imprimeProduto(produtos, posicao);
 				break;
 			default:
-				System.out.println("Sistema Encerrado");
+				print.fechaPrograma();
+				scan.close();
 				opcao = -1;
 			}
 		}
